@@ -13,7 +13,7 @@ class WorkanaQualifications {
     private function __construct() {
         $this->enqueue = new Enqueue( $this->app_name, 'dist', $this->version, 'plugin', PLUGIN_PATH );
 
-        $this->actions();
+        $this->register_actions();
     }
 
     static function instance() {
@@ -23,7 +23,7 @@ class WorkanaQualifications {
         return self::$instance;
     }
 
-    private function actions() {
+    private function register_actions() {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
 

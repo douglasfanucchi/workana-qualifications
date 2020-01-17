@@ -26,6 +26,13 @@ class WorkanaQualifications {
     private function actions() {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+
+        register_activation_hook( PLUGIN_PATH, [$this, 'activated']);
+    }
+
+    public function activated() {
+        if( version_compare(get_bloginfo('version'), '5.0.0', '<') )
+            wp_die(__('You should update your WordPress before using this plugins!', 'workana-qualifications'));
     }
 
     public function enqueue_admin_scripts() {

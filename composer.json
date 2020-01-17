@@ -1,0 +1,11 @@
+{
+    "require": {
+        "paquettg/php-html-parser": "^2.2",
+        "wpackio/enqueue": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Classes\\": "includes/classes"
+        }
+    }
+}

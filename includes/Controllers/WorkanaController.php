@@ -15,8 +15,12 @@ class WorkanaController extends \WP_REST_Controller {
 
     public function get_items($request) {
         $webscrapper = new Webscrapper;
+        $args = [];
 
-        $qualifications = $webscrapper->get_qualifications();
+        if( $request->get_param("forced_load") )
+            $args["forced_load"] = true;
+
+        $qualifications = $webscrapper->get_qualifications($args);
 
         return new \WP_REST_Response($qualifications);
     }

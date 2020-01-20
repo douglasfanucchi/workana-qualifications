@@ -3,6 +3,7 @@
 namespace Classes;
 
 use WPackio\Enqueue;
+use Controllers\WorkanaController;
 
 class WorkanaQualifications {
     private static $instance = NULL;
@@ -26,6 +27,7 @@ class WorkanaQualifications {
     private function register_actions() {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action( 'rest_api_init', [new WorkanaController, 'register_routes'] );
 
         register_activation_hook( PLUGIN_PATH, [$this, 'activated']);
     }

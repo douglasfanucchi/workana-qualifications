@@ -5,7 +5,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Classes\\": "includes/classes"
+            "Classes\\": "includes/classes",
+            "Controllers\\": "includes/controllers"
         }
     }
 }

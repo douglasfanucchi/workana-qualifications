@@ -22,15 +22,25 @@ module.exports = {
 		{
 			name: "fnwq-js",
 			entry: {
-				admin: [path.resolve(__dirname, "src", "js", "admin.js")],
 				app: [path.resolve(__dirname, "src", "js", "app.js")]
+			}
+		},
+		{
+			name: "fnwq-admin-js",
+			entry: {
+				admin: [path.resolve(__dirname, "src", "js", "admin.js")]
 			}
 		},
 		{
 			name: "fnwq-css",
 			entry: {
-				admin: [path.resolve(__dirname, "src", "scss", "admin.scss")],
 				app: [path.resolve(__dirname, "src", "scss", "app.scss")]
+			}
+		},
+		{
+			name: "fnwq-admin-css",
+			entry: {
+				admin: [path.resolve(__dirname, "src", "scss", "admin.scss")]
 			}
 		}
 	],

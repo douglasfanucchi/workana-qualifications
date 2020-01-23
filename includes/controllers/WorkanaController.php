@@ -7,7 +7,7 @@ use Classes\Webscrapper;
 class WorkanaController extends \WP_REST_Controller {
     
     public function register_routes() {
-        register_rest_route( 'wkqf/v1', '/qualifications', [
+        register_rest_route( 'fnwq/v1', '/qualifications', [
             'methods' => 'GET',
             'callback' => [$this, 'get_items']
         ]);

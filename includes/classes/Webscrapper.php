@@ -39,7 +39,7 @@ class Webscrapper {
 
         foreach( $rating_items as $rating_item ) {
             $message         = new \stdClass;
-            $message->text   = $rating_items->find('cite')->text;
+            $message->text   = $rating_item->find('cite')->text;
             $message->client = new \stdClass;
 
             $img                     = $rating_item->find('.img.profile-photo img');

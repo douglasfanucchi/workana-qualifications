@@ -25,9 +25,8 @@ class WorkanaQualifications {
     }
 
     private function register_actions() {
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
         add_action( 'rest_api_init', [new WorkanaController, 'register_routes'] );
+        add_action('init', [$this, 'register_blocks']);
 
         register_activation_hook( PLUGIN_PATH, [$this, 'activated']);
     }
@@ -37,13 +36,35 @@ class WorkanaQualifications {
             wp_die(__('You should update your WordPress before using this plugins!', 'workana-qualifications'));
     }
 
-    public function enqueue_admin_scripts() {
-        $this->enqueue->enqueue( 'fnwq-js', 'admin', [] );
-        $this->enqueue->enqueue( 'fnwq-css', 'admin', [] );
-    }
+    public function register_blocks() {
+        $this->enqueue->register( 'fnwq-admin-js', 'admin', []);
+        $this->enqueue->register( 'fnwq-admin-css', 'admin', [] );
 
-    public function enqueue_scripts() {
-        $this->enqueue->enqueue( 'fnwq-js', 'app', [] );
-        $this->enqueue->enqueue( 'fnwq-css', 'app', [] );
+        $assets = $this->enqueue->getAssets('fnwq-admin-js', 'admin', ['js' => true, 'css' => false]);
+
+        $handles = array_map(function($js) {
+            return $js['handle'];
+        }, $assets['js']);
+
+        $handlejs = array_pop( $handles );
+
+        $assets = $this->enqueue->getAssets('fnwq-admin-css', 'admin', ['js' => false, 'css' => true]);
+        
+        $csses = $assets['css'];
+
+        $handles = array_map(function($css) {
+            return $css['handle'];
+        }, $csses);
+
+        $handlecss = array_pop($handles);
+
+        wp_localize_script($handlejs, 'api', [
+            'url' => site_url('/wp-json')
+        ]);
+
+        register_block_type('fnwq/workana-qualifications', [
+            'editor_script' => $handlejs,
+            'editor_style' => $handlecss
+        ]);
     }
 }

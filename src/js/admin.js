@@ -1,6 +1,8 @@
 const { registerBlockType } = wp.blocks
 const { RichText } = wp.editor
 
+import edit from './edit'
+
 registerBlockType('fnwq/qualifications', {
     title: 'Workana Qualifications',
     category: 'widgets',
@@ -8,7 +10,7 @@ registerBlockType('fnwq/qualifications', {
         qualifications: {
             source: 'query',
             type: 'array',
-            selector: 'li.qualifications__item',
+            selector: 'li.qualifications-list__item',
             query: {
                 clientName: {
                     type: 'string',
@@ -20,45 +22,34 @@ registerBlockType('fnwq/qualifications', {
                     selector: '.item__message',
                     type: 'string',
                     default: ''
+                },
+                clientAvatar: {
+                    source: 'attribute',
+                    selector: '.item__avatar img',
+                    type: 'string',
+                    attribute: 'src'
                 }
             },
             default: []
         }
     },
-    edit({className, attributes: {qualifications}, setAttributes}) {
-        if( qualifications.length === 0)
-            fetch(`${api.url}/fnwq/v1/qualifications`)
-                .then(r => r.json())
-                .then(qualifications => {
-                    qualifications.forEach( item => {
-                        item.clientName = item.client.name
-                    })
+    edit,
+    save(props) {
+        const { qualifications } = props.attributes
 
-                    setAttributes({qualifications})
-                })
-        else {
-            console.log(qualifications)
-        }
-        return (
-            <div className={className}>
-                <ul className="qualifications">
-                    {qualifications.map((item, index) => (
-                            <li key={`${index}-${item}`} className="qualifications__item">
-                                <span className="item__client">{item.clientName}</span> - <span className="item__message">{item.text}</span>
-                            </li>
-                    ))}
-                </ul>
-            </div>
-        )
-    },
-    save({attributes: {qualifications}}) {
         return(
-            <ul className="qualifications">
-               {qualifications.map((item, index) => (
-                    <li key={`${index}-${item}`} className="qualifications__item">
-                        <span className="item__client">{item.clientName}</span> - <span className="item__message">{item.text}</span>
-                    </li>
-               ))}
+            <ul className="qualifications-list">
+                {qualifications.map( qualification => (
+                <li className="qualifications-list__item">
+                    <span className="item__avatar">
+                        <figure>
+                            <img src={qualification.clientAvatar} />
+                        </figure>
+                    </span>
+                    <span className="item__client">{qualification.clientName}</span>
+                    <p className="item__message">{qualification.text}</p>
+                </li>
+                ) )}
             </ul>
         )
     }

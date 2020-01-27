@@ -1,14 +1,16 @@
 .qualifications-list {
+    overflow: hidden;
+
     &__item {
         list-style: none;
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         align-items: center;
         margin: 0 10px;
 
         .item {
             &__avatar {
-                width: 80px;
+                width: 120px;
 
                 figure {
                     margin: 0;
@@ -21,18 +23,21 @@
             }
             
             &__name {
-                font-size: 16px;
+                font-size: 25px;
                 margin-top: 5px;
             }
 
             &__message {
                 font-style: italic;
-                font-size: 14px;
+                font-size: 20px;
                 margin: 0;
-                max-width: 200px;
                 text-align: center;
                 margin-top: 5px;
             }
         }
     }
+}
+
+.slick-track {
+    display: flex;
 }

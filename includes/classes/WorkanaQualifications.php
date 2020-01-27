@@ -47,6 +47,12 @@ class WorkanaQualifications {
             'options' => []
         ]);
 
+        $fnwq_block->set_asset('js', [
+            'script' => true,
+            'file_name' => 'fnwq-js',
+            'entry' => 'app'
+        ]);
+
         $fnwq_block->set_asset('css', [
             'editor_style' => true,
             'file_name' => 'fnwq-admin-css',

@@ -26,7 +26,7 @@ class WorkanaQualifications {
 
     private function register_actions() {
         add_action( 'rest_api_init', [new WorkanaController, 'register_routes'] );
-        add_action('init', [$this, 'register_blocks']);
+        add_action('init', [$this, 'init']);
 
         register_activation_hook( PLUGIN_PATH, [$this, 'activated']);
     }
@@ -36,35 +36,32 @@ class WorkanaQualifications {
             wp_die(__('You should update your WordPress before using this plugins!', 'workana-qualifications'));
     }
 
-    public function register_blocks() {
-        $this->enqueue->register( 'fnwq-admin-js', 'admin', []);
-        $this->enqueue->register( 'fnwq-admin-css', 'admin', [] );
+    public function init() {
+        $fnwq_block = new Block('fnwq/workana-qualifications');
+        $fnwq_block->set_enqueue( $this->enqueue );
 
-        $assets = $this->enqueue->getAssets('fnwq-admin-js', 'admin', ['js' => true, 'css' => false]);
-
-        $handles = array_map(function($js) {
-            return $js['handle'];
-        }, $assets['js']);
-
-        $handlejs = array_pop( $handles );
-
-        $assets = $this->enqueue->getAssets('fnwq-admin-css', 'admin', ['js' => false, 'css' => true]);
-        
-        $csses = $assets['css'];
-
-        $handles = array_map(function($css) {
-            return $css['handle'];
-        }, $csses);
-
-        $handlecss = array_pop($handles);
-
-        wp_localize_script($handlejs, 'api', [
-            'url' => site_url('/wp-json')
+        $fnwq_block->set_asset('js', [
+            'editor_script' => true,
+            'file_name' => 'fnwq-admin-js',
+            'entry' => 'admin',
+            'options' => []
         ]);
 
-        register_block_type('fnwq/workana-qualifications', [
-            'editor_script' => $handlejs,
-            'editor_style' => $handlecss
+        $fnwq_block->set_asset('css', [
+            'editor_style' => true,
+            'file_name' => 'fnwq-admin-css',
+            'entry' => 'admin',
+            'options' => []
         ]);
+
+        $fnwq_block->set_asset('css', [
+            'style' => true,
+            'file_name' => 'fnwq-css',
+            'entry' => 'app',
+            'options' => []
+        ]);
+
+        $fnwq_block->register_assets();
+        $fnwq_block->register_block();
     }
 }

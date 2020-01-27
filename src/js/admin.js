@@ -2,6 +2,7 @@ const { registerBlockType } = wp.blocks
 const { RichText } = wp.editor
 
 import edit from './edit'
+import save from './save'
 
 registerBlockType('fnwq/qualifications', {
     title: 'Workana Qualifications',
@@ -15,7 +16,7 @@ registerBlockType('fnwq/qualifications', {
                 clientName: {
                     type: 'string',
                     source: 'text',
-                    selector: '.item__client'
+                    selector: '.item__name'
                 },
                 text: {
                     source: 'text',
@@ -34,23 +35,5 @@ registerBlockType('fnwq/qualifications', {
         }
     },
     edit,
-    save(props) {
-        const { qualifications } = props.attributes
-
-        return(
-            <ul className="qualifications-list">
-                {qualifications.map( qualification => (
-                <li className="qualifications-list__item">
-                    <span className="item__avatar">
-                        <figure>
-                            <img src={qualification.clientAvatar} />
-                        </figure>
-                    </span>
-                    <span className="item__client">{qualification.clientName}</span>
-                    <p className="item__message">{qualification.text}</p>
-                </li>
-                ) )}
-            </ul>
-        )
-    }
+    save
 })

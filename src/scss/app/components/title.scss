@@ -3,4 +3,13 @@
     font-weight: bold;
     text-align: center;
     margin-bottom: 30px;
+
+    &::after {
+        content: " ";
+        display: block;
+        height: 1px;
+        background-color: #ddd;
+        width: 80%;
+        margin: 20px auto 20px auto;
+    }
 }

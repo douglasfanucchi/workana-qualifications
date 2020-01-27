@@ -5,7 +5,7 @@ export default function Entry({attributes}) {
     const { title } = attributes
 
     return(
-        <div className="container">
+        <div className="container wp-block">
             <h1 className="title">{title}</h1>
             <QualificationList qualifications={qualifications} />
         </div>

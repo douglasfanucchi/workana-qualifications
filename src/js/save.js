@@ -1,7 +1,13 @@
 import QualificationList from './components/qualifications-list/index.js'
 
-export default function Entry({attributes: {qualifications}}) {
+export default function Entry({attributes}) {
+    const { qualifications } = attributes
+    const { title } = attributes
+
     return(
-        <QualificationList qualifications={qualifications} />
+        <div className="container">
+            <h1 className="title">{title}</h1>
+            <QualificationList qualifications={qualifications} />
+        </div>
     )
 }

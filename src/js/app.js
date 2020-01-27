@@ -1,7 +1,7 @@
 import "slick-carousel"
 
 jQuery('.qualifications-list').slick({
-    slidesToShow: 1,
+    slidesToShow: 2,
     vertical: false,
     arrows: false
 })

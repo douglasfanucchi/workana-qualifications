@@ -8,6 +8,11 @@ registerBlockType('fnwq/qualifications', {
     title: 'Workana Qualifications',
     category: 'widgets',
     attributes: {
+        title: {
+            selector: 'h1',
+            source: 'text',
+            type: 'string'
+        },
         qualifications: {
             source: 'query',
             type: 'array',

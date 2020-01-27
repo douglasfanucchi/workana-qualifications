@@ -1,6 +1,8 @@
 import api from './services/api'
 import QualificationList from './components/qualifications-list/index.js'
 
+const { RichText } = wp.editor
+
 export default function Entry(props) {
     const { attributes } = props
     const { setAttributes } = props
@@ -22,6 +24,9 @@ export default function Entry(props) {
         setQualifications()
 
     return(
-        <QualificationList qualifications={attributes.qualifications} />
+        <div className={props.className}>
+            <RichText onChange={ title => setAttributes({title}) } value={ attributes.title || "Qualificações da Workana!" } />
+            <QualificationList qualifications={attributes.qualifications} />
+        </div>
     )
 }
